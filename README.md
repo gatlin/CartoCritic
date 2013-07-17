@@ -4,7 +4,6 @@ CartoCritic
 A tool for cartography classrooms. (c) 2013 Gatlin Johnson
 
 **THIS IS NOWHERE NEAR COMPLETE DON'T EVEN BOTHER RUNNING IT**
-
 0. LICENSE
 ---
 
