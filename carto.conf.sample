@@ -6,6 +6,9 @@
     db_user => 'root',
     db_pass => 'root',
     mode => 'development',
+    hypnotoad => {
+        listen => ['http://*:8000'],
+    },
     hostname => 'localhost:5000',
     salt => 'aoeuaoeuaoeuaoeu',
     cert_file => '...',

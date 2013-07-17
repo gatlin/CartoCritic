@@ -73,8 +73,6 @@ sub startup {
             if (not defined $obj) {
                 return undef;
             }
-            say "ENCRYPTED: ", $self->encrypt($password);
-            say "EXISTING: ", $obj->password;
             $uid = $username if $self->encrypt($password) eq $obj->password;
             return $uid;
         },
