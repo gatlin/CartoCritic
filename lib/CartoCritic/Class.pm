@@ -73,13 +73,10 @@ sub remove {
     my $user = $self->current_user;
     my $id   = $self->param('id');
 
-    $self->render(json => '', status => 403)
-        unless $user->role eq 'teacher';
-
     my $c = $user->teacher->classes->find($id) // undef;
     $c->delete if $c;
 
-    $self->render(json => '');
+    $self->render(json => {});
 }
 
 1;

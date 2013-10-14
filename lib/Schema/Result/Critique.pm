@@ -70,6 +70,12 @@ __PACKAGE__->table("critiques");
   is_nullable: 1
   size: 100
 
+=head2 graded
+
+  data_type: 'integer'
+  default_value: 0
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -89,6 +95,8 @@ __PACKAGE__->add_columns(
   },
   "guid",
   { data_type => "varchar", is_nullable => 1, size => 100 },
+  "graded",
+  { data_type => "integer", default_value => 0, is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -136,8 +144,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-10-14 02:23:29
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:77NLfwhpXUssdGiv18nDHQ
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-10-14 14:31:27
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:l2BXSG6w6FKGKBWOevv+sA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

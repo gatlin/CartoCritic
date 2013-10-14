@@ -96,21 +96,21 @@
                     <th>View</th>
                 </tr>
                 <tr ng-repeat="a in assignments | filter:searchText">
-                    <td><input type="checkbox"
-                        ng-model="a.checked"></td>
+                    <td>
+                        <input type="checkbox" ng-model="a.checked"></td>
                     <td >
-                        <input type='text' class='form-control'
+                        <input type='text' class='form-control input-sm'
                         ng-model='a.name'>
                     </td>
                     <td >
                         <div class="form-group">
                             <div ui-jq='datetimepicker'
                                  id='datetimepicker{{a.id}}'
-                                 class="input-group date">
+                                 class="input-group input-group-sm date">
                                  <input type="text"
                                         ng-model="a.due"
                                         data-format="yyyy-MM-dd hh:mm:ss"
-                                        class="form-control">
+                                        class="form-control input-sm">
                                 <span class="input-group-addon">
                                     <span class="glyphicon
                                         glyphicon-calendar"></span>
@@ -120,7 +120,7 @@
                         </div>
                     </td>
                     <td>
-                        <a class="btn btn-info btn-block"
+                        <a class="btn btn-info btn-block btn-sm"
                            href="#/assignments/{{a.id}}">View</a>
                     </td>
                 </tr>

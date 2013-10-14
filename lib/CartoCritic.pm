@@ -125,6 +125,7 @@ sub startup {
     $api->get('/assignments/:id')->to('assignment#retrieve');
     $api->post('/assignments')->to('assignment#create');
     $api->delete('/assignments/:id')->to('assignment#remove');
+    $api->post('/assignments/:id/assign')->to('assignment#assign');
 =cut
     $api->put('/students/:id')->to('student#update');
 

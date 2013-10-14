@@ -245,14 +245,31 @@ appCtrl.controller('AssignmentCtrl',['$scope','$http','$routeParams',
         console.log("AssignmentCtrl");
         $scope.assignment = {};
         var id = $routeParams.id;
-        $http.get('/api/v1/assignments/'+id).
-            success(function(data,success) {
-                $scope.assignment = data;
-                $http.get('/api/v1/assignments/'+$scope.assignment.id+'/students').
-                    success(function(data,success) {
-                        $scope.roster = data;
-                    });
-            });
+
+        $scope.getRoster = function() {
+            $http.get('/api/v1/assignments/'+$scope.assignment.id+'/students').
+                success(function(data,success) {
+                    $scope.roster = data;
+                });
+        };
+
+        $scope.getAssignment = function() {
+            $http.get('/api/v1/assignments/'+id).
+                success(function(data,success) {
+                    $scope.assignment = data;
+                    $scope.getRoster();
+                });
+        };
+
+        $scope.getAssignment();
+
+        $scope.assign = function() {
+            var id = $routeParams.id;
+            $http.post('/api/v1/assignments/'+id+'/assign').
+                success(function(data,success) {
+                    $scope.getAssignment();
+                });
+        };
     }
 ]);
 

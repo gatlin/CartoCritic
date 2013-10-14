@@ -25,13 +25,15 @@ sub for_assignment {
     my $a = $self->db->resultset('Assignment')->find($id);
     my $class = $a->class;
     my @students = map {
+        my @maps = $a->search_related('maps', { student_id => $_->student->id });
+        use Data::Dump qw(pp);
         {
             id => $_->student->id,
             fname => $_->student->fname,
             lname => $_->student->lname,
-            submitted => \0,
-            critiqued => \0,
+            submitted => ($maps[0] && $maps[0]->submitted) ? \1 : \0,
             peers_done => 0,
+            link => ($maps[0]) ? $maps[0]->guid : '',
         }
     } $class->student_classes->all;
 
