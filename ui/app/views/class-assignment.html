@@ -1,0 +1,70 @@
+<ol class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#/classes">Classes</a></li>
+    <li><a href="#/classes/{{id}}">{{class_.title}}</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-md-12 col-lg-8 col-lg-offset-2 col-sm-12">
+        <div class="page-header">
+            <h1>Assignments for {{class_.title}}</h1>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-lg-8 col-lg-offset-2 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button"
+                            ng-click="newAssignment()"
+                            ng-hide="newAssignmentObj||editing"
+                            class="btn btn-default">New</button>
+                        <button type="button"
+                            ng-click="saveAssignment()"
+                            ng-show="newAssignmentObj||editing"
+                            class="btn btn-success">Save</button>
+                    </div>
+                    <input type="search" ng-model='searchText' class="form-control" placeholder="Search ...">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-danger" ng-click="rmAssignments()">Delete</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Due Date</th>
+                </tr>
+                <tr ng-repeat="a in assignments | filter:searchText">
+                    <td style="vertical-align:middle"><input type="checkbox"
+                        ng-model="a.checked"></td>
+                    <td >
+                        <input type='text' class='form-control'
+                        ng-model='a.name'>
+                    </td>
+                    <td >
+                        <div class="form-group">
+                            <div ui-jq='datetimepicker'
+                                 id='datetimepicker{{a.id}}'
+                                 class="input-group date">
+                                 <input type="text"
+                                        ng-model="a.due"
+                                        data-format="yyyy-MM-dd hh:mm:ss"
+                                        class="form-control">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon
+                                        glyphicon-calendar"></span>
+                                </span>
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

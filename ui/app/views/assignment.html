@@ -1,0 +1,61 @@
+<ol class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#/classes">Classes</a></li>
+    <li><a href="#/classes/{{assignment.class.id}}">{{assignment.class.title}}</a></li>
+    <li><a href="#/classes/{{assignment.class.id}}/assignments">Assignments</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-md-12 col-lg-10 col-lg-offset-1 col-sm-12">
+        <div class="page-header">
+            <h1>{{assignment.name}} <small>{{assignment.due}}</small></h1>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-lg-10 col-lg-offset-1 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default">Add
+                        Student</button>
+                    <button type="button" class="btn btn-danger">Remove
+                        Student</button>
+                </div>
+                <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-info">Assign</button>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Student</th>
+                        <th>Submitted Map</th>
+                        <th>Map Critiqued</th>
+                        <th>Critiqued Peers</th>
+                        <th>Link</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="s in roster">
+                        <td style="vertical-align:middle"><input type="checkbox" class="form-control"
+                            ng-model="s.checked"></td>
+                        <td style="vertical-align:middle">{{s.fname}}
+                            {{s.lname}}</td>
+                        <td style="vertical-align:middle">{{s.submitted}}</td>
+                        <td style="vertical-align:middle">{{s.critiqued}}</td>
+                        <td style="vertical-align:middle">{{s.peers_done}}</td>
+                        <td style="vertical-align:middle">
+                            <input type='text' class='form-control'
+                            value='http://blah/aoeuaoeu'>
+                        </td>
+                        <td style="vertical-align:middle"><a href="#">Map</a> &mdash; <a href="#">Pack</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,130 @@
+<ol class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#/classes">Classes</a></li>
+</ol>
+
+<div class="page-header">
+    <h1>{{class_.title}} <small>{{class_.semester}}</small></h1>
+</div>
+
+
+<div class="row">
+    <div class="col-md-3 col-sm-12">
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="#/classes/{{id}}/students">Students</a></li>
+            <li><a href="#/classes/{{id}}/assignments">Assignments</a></li>
+            <li><a href="#/classes/edit/{{id}}" >Edit Class Info</a></li>
+        </ul>
+    </div>
+    <div class="col-md-9 col-sm-12" ng-switch on="viewing">
+        <div class="panel panel-default" ng-switch-when="students">
+            <div class="panel-heading">
+                Students
+            </div>
+            <div class="panel-body">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default"
+                        ng-click="newStudent()"
+                        >New
+                        Student</button>
+                    <button type="button" class="btn btn-danger pull-right"
+                        ng-click="rmStudents()"
+                        >Remove
+                        Students</button>
+                </div>
+                <div class="btn-group pull-right" ng-show="newStudentObj">
+                    <button type="button" class="btn btn-success"
+                        ng-click="saveStudent()">Save</button>
+                    <button type="button" class="btn btn-warning"
+                        ng-click="discardStudent()">Discard</button>
+                </div>
+            </div>
+            <div class="alert alert-info" ng-hide="students.length">
+                No students in this class yet. Not too popular on
+                RateMyProf.com, eh?
+            </div>
+            <table class="table table-striped" ng-show="students.length">
+                <tr>
+                    <th></th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                </tr>
+                <tr ng-repeat="s in students">
+                    <td>
+                        <input type='checkbox' class='form-control' ng-model="s.checked">
+                    </td>
+                    <td style="vertical-align:middle"><input type='text' class="form-control" name='fname' ng-model='s.fname'></td>
+                    <td style="vertical-align:middle"><input type='text' class="form-control" name='lname' ng-model='s.lname'></td>
+                    <td style="vertical-align:middle"><input type='email' class="form-control" name='email' ng-model='s.email'></td>
+                </tr>
+            </table>
+        </div>
+        <div class="panel panel-default" ng-switch-when="assignments">
+            <div class="panel-heading">
+                Assignments
+            </div>
+            <div class="panel-body">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button"
+                            ng-click="newAssignment()"
+                            ng-hide="newAssignmentObj"
+                            class="btn btn-default">New</button>
+                        <button type="button"
+                            ng-click="saveAssignment()"
+                            ng-show="newAssignmentObj"
+                            class="btn btn-success">Save</button>
+                    </div>
+                    <input type="search" ng-model='searchText' class="form-control" placeholder="Search ...">
+                    <div class="input-group-btn">
+                        <button type="button"
+                                ng-hide="newAssignmentObj"
+                                class="btn btn-danger" ng-click="rmAssignments()">Delete</button>
+                        <button type="button"
+                                ng-show="newAssignmentObj"
+                                class="btn btn-danger"
+                                ng-click="discardAssignment()">Discard</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped" >
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Due Date</th>
+                    <th>View</th>
+                </tr>
+                <tr ng-repeat="a in assignments | filter:searchText">
+                    <td><input type="checkbox"
+                        ng-model="a.checked"></td>
+                    <td >
+                        <input type='text' class='form-control'
+                        ng-model='a.name'>
+                    </td>
+                    <td >
+                        <div class="form-group">
+                            <div ui-jq='datetimepicker'
+                                 id='datetimepicker{{a.id}}'
+                                 class="input-group date">
+                                 <input type="text"
+                                        ng-model="a.due"
+                                        data-format="yyyy-MM-dd hh:mm:ss"
+                                        class="form-control">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon
+                                        glyphicon-calendar"></span>
+                                </span>
+
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <a class="btn btn-info btn-block"
+                           href="#/assignments/{{a.id}}">View</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

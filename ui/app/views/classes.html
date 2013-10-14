@@ -1,0 +1,48 @@
+<ol class="breadcrumb">
+    <li><a href="#">Home</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-md-12 col-lg-8 col-lg-offset-2 col-sm-12">
+        <div class="page-header">
+            <h1>Classes</h1>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-lg-8 col-lg-offset-2 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <a class="btn btn-default" href="#/classes/new">New</a>
+                    </div>
+                    <input type="search" ng-model="searchText" class="form-control" placeholder="Search ...">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-danger"
+                            ng-click="rmClasses()">Remove</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Semester</th>
+                </tr>
+                <tr ng-repeat="class in classes | filter:searchText">
+                    <td style="vertical-align:middle">
+                        <input type="checkbox" ng-model="class.checked">
+                    </td>
+                    <td style="vertical-align:middle">
+                        <a href="#/classes/{{class.id}}">
+                            {{class.title}}
+                            </a>
+                    </td>
+                    <td style="vertical-align:middle">{{class.semester}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
