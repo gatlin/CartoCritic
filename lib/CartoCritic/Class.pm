@@ -3,17 +3,16 @@ use Mojo::Base 'Mojolicious::Controller';
 
 sub list {
     my $self = shift;
-
     my $user = $self->current_user;
 
-    if ($user->role eq 'teacher') {
-        my @classes = $user->teacher->classes;
-        $self->render(json => \@classes);
-    }
-    else {
-        my @classes = $user->student->classes;
-        $self->render(json => \@classes);
-    }
+    my @classes = map {
+        {
+            title => $_->title,
+            semester => $_->semester,
+            id => $_->id,
+        }
+    } $user->teacher->classes->all;
+    $self->render(json => \@classes);
 }
 
 sub retrieve {
@@ -23,18 +22,14 @@ sub retrieve {
     my $c;
 
     my $user = $self->current_user;
-    if ($user->role eq 'teacher') {
-        $c = $user->teacher->classes->find($id);
-        $self->render(json => '', status => 404)
-            unless $c;
-    }
-    else {
-        $c = $user->student->classes->find($id);
-        $self->render(json => '', status => 404)
-            unless $c;
-    }
+    $c = $user->teacher->classes->find($id);
+    $self->render(json => '', status => 404)
+        unless $c;
 
-    $self->render(json => $c);
+    $self->render(json => {
+        title => $c->title,
+        semester => $c->semester,
+    });
 }
 
 sub create {
@@ -52,31 +47,31 @@ sub create {
         archived => 0,
     });
 
-    $self->render(json => r);
+    $self->render(json => $r);
 }
 
 sub update {
     my $self = shift;
     my $user = $self->current_user;
-    my $id   = $self->params('id');
-
-    $self->render(json => '', status => 403)
-        unless $user->role eq 'teacher';
+    my $id   = $self->param('id');
 
     my $n = Mojo::JSON->new->decode($self->req->body);
     my $o = $user->teacher->classes->find($id) // undef;
 
-    $self->render(json => '', status => 404)
+    $self->render(status => 404)
         unless $o;
 
-    $r = $o->update($n);
-    $self->render(json => $r);
+    my $r = $o->update($n);
+    $self->render(json => {
+        title => $r->title,
+        semester => $r->semester,
+    });
 }
 
 sub remove {
     my $self = shift;
     my $user = $self->current_user;
-    my $id   = $self->params('id');
+    my $id   = $self->param('id');
 
     $self->render(json => '', status => 403)
         unless $user->role eq 'teacher';
@@ -84,7 +79,7 @@ sub remove {
     my $c = $user->teacher->classes->find($id) // undef;
     $c->delete if $c;
 
-    $self->render(json => '', status => 204);
+    $self->render(json => '');
 }
 
 1;

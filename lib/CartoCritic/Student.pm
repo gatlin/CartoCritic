@@ -1,14 +1,40 @@
 package CartoCritic::Student;
 use Mojo::Base 'Mojolicious::Controller';
 
-sub list {
+sub for_class {
     my $self = shift;
     my $user = $self->current_user;
+    my $id   = $self->param('id');
+    my $class = $user->teacher->classes->find($id);
+    my @students = map {
+        {
+            id => $_->student->id,
+            fname => $_->student->fname,
+            lname => $_->student->lname,
+            email => $_->student->email,
+        }
+    } $class->student_classes->all;
 
-    $self->render(json => '', status => 403)
-        unless $user->role eq 'teacher';
+    $self->render(json => \@students);
+}
 
-    my @students = $self->db->resultset('Student')->all;
+sub for_assignment {
+    my $self = shift;
+    my $user = $self->current_user;
+    my $id   = $self->param('id');
+    my $a = $self->db->resultset('Assignment')->find($id);
+    my $class = $a->class;
+    my @students = map {
+        {
+            id => $_->student->id,
+            fname => $_->student->fname,
+            lname => $_->student->lname,
+            submitted => \0,
+            critiqued => \0,
+            peers_done => 0,
+        }
+    } $class->student_classes->all;
+
     $self->render(json => \@students);
 }
 
@@ -34,20 +60,28 @@ sub retrieve {
 
 sub create {
     my $self = shift;
-    my $user = $self->current_users;
+    my $user = $self->current_user;
 
     my $obj = Mojo::JSON->new->decode($self->req->body);
+    my $class = $self->db->resultset('Class')->find($obj->{class});
 
-    my $r = $user->student->create({
-        name => $obj->{name},
+    my $r = $self->db->resultset('Student')->create({
+        fname => $obj->{fname},
+        lname => $obj->{lname},
+        email => $obj->{email},
     });
 
-    $self->render(json => $r, status => 201);
+    $self->db->resultset('StudentClass')->create({
+        student => $r,
+        class   => $class,
+    });
+
+    $self->render(json => $r);
 }
 
 sub update {
     my $self = shift;
-    my $user = $self->current_users;
+    my $user = $self->current_user;
     my $id   = $self->params('id');
 
     my $n = Mojo::JSON->new->decode($self->req->body);
@@ -56,18 +90,27 @@ sub update {
     $self->render(json => '', status => 404)
         unless $o;
 
-    $r = $o->update($n);
+    my $r = $o->update($n);
     $self->render(json => $r);
 }
 
 sub remove {
     my $self = shift;
-    my $user = $self->current_users;
-    my $id   = $self->params('id');
+    my $user = $self->current_user;
+    my $id   = $self->param('id');
 
+    my $student = $self->db->resultset('Student')->find($id);
+    my @scs = $student->student_classes->all;
+    foreach my $sc (@scs) {
+        $sc->delete if $sc;
+    }
+    $student->delete if $student;
 
+    $self->render(json => {});
 }
 
 sub grades {
     my $self = shift;
 }
+
+1;

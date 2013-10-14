@@ -114,17 +114,17 @@ __PACKAGE__->add_unique_constraint("username", ["username"]);
 
 =head1 RELATIONS
 
-=head2 student
+=head2 roles
 
-Type: might_have
+Type: has_many
 
-Related object: L<Schema::Result::Student>
+Related object: L<Schema::Result::Role>
 
 =cut
 
-__PACKAGE__->might_have(
-  "student",
-  "Schema::Result::Student",
+__PACKAGE__->has_many(
+  "roles",
+  "Schema::Result::Role",
   { "foreign.user_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
@@ -145,8 +145,8 @@ __PACKAGE__->might_have(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-07-17 15:38:30
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ovvCbK9veQ7uHohPnn4nAw
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-10-13 20:00:40
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2ZLtIr8+uDUeS9F7BUI8Mw
 # These lines were loaded from './Schema/Result/User.pm' found in @INC.
 # They are now part of the custom portion of this file
 # for you to hand-edit.  If you do not either delete

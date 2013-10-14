@@ -8,9 +8,12 @@ has usage => "usage: $0 mkteacher [USERNAME]\n";
 
 sub run {
     my ($self) = @_;
-    print "Name: ";
-    my $realname = <STDIN>;
-    chomp($realname);
+    print "First Name: ";
+    my $fname = <STDIN>;
+    chomp($fname);
+    print "Last Name: ";
+    my $lname = <STDIN>;
+    chomp($lname);
     print "Username: ";
     my $username = <STDIN>;
     chomp($username);
@@ -34,7 +37,8 @@ sub run {
     });
 
     my $tr = $self->app->db->resultset('Teacher')->create({
-        name => $realname,
+        fname => $fname,
+        lname => $lname,
         user => $ur,
     });
 

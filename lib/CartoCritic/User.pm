@@ -75,4 +75,41 @@ sub logout_user {
     $self->redirect_to('/login');
 }
 
+sub userinfo {
+    my $self = shift;
+    my $user = $self->current_user;
+    my $teacher = $user->teacher;
+    $self->render(json => {
+        username => $user->username,
+        fname => $teacher->fname,
+        lname => $teacher->lname,
+        email => $user->email,
+        id => $user->id
+    });
+}
+
+sub update {
+    my $self = shift;
+    my $user = $self->current_user;
+
+    my $obj = Mojo::JSON->new->decode($self->req->body);
+    my $p1 = $obj->{password};
+    my $p2 = $obj->{password_again};
+
+    my $n = {
+        username => $obj->{username},
+        email => $obj->{email},
+    };
+
+    if ($p1 eq $p2 && $p1 ne '') {
+        $n->{password} = $self->encrypt($p1);
+    }
+
+    $user->update($n);
+    $self->render(json => {
+        username => $obj->{username},
+        email => $obj->{email},
+    });
+}
+
 1;

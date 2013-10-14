@@ -19,6 +19,7 @@ sub register {
 sub main {
     my $self = shift;
     $self->app->log->debug("in main app");
+#    $self->render_static('app.html');
     $self->render_static('app.html');
 }
 

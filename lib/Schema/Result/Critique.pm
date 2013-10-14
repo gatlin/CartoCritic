@@ -47,7 +47,7 @@ __PACKAGE__->table("critiques");
   is_foreign_key: 1
   is_nullable: 0
 
-=head2 student_id
+=head2 grader_id
 
   data_type: 'integer'
   is_foreign_key: 1
@@ -64,6 +64,12 @@ __PACKAGE__->table("critiques");
   datetime_undef_if_invalid: 1
   is_nullable: 1
 
+=head2 guid
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 100
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -71,7 +77,7 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "map_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
-  "student_id",
+  "grader_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "analysis",
   { data_type => "longtext", is_nullable => 1 },
@@ -81,6 +87,8 @@ __PACKAGE__->add_columns(
     datetime_undef_if_invalid => 1,
     is_nullable => 1,
   },
+  "guid",
+  { data_type => "varchar", is_nullable => 1, size => 100 },
 );
 
 =head1 PRIMARY KEY
@@ -97,6 +105,21 @@ __PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
+=head2 grader
+
+Type: belongs_to
+
+Related object: L<Schema::Result::Student>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "grader",
+  "Schema::Result::Student",
+  { id => "grader_id" },
+  { is_deferrable => 1, on_delete => "RESTRICT", on_update => "RESTRICT" },
+);
+
 =head2 map
 
 Type: belongs_to
@@ -112,24 +135,9 @@ __PACKAGE__->belongs_to(
   { is_deferrable => 1, on_delete => "RESTRICT", on_update => "RESTRICT" },
 );
 
-=head2 student
 
-Type: belongs_to
-
-Related object: L<Schema::Result::Student>
-
-=cut
-
-__PACKAGE__->belongs_to(
-  "student",
-  "Schema::Result::Student",
-  { id => "student_id" },
-  { is_deferrable => 1, on_delete => "RESTRICT", on_update => "RESTRICT" },
-);
-
-
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-07-16 11:55:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:CI98Pq+954pT8fCxAagGbA
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-10-14 02:23:29
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:77NLfwhpXUssdGiv18nDHQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

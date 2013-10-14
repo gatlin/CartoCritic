@@ -41,27 +41,35 @@ __PACKAGE__->table("students");
   is_auto_increment: 1
   is_nullable: 0
 
-=head2 name
+=head2 fname
 
   data_type: 'varchar'
   is_nullable: 1
   size: 100
 
-=head2 user_id
+=head2 lname
 
-  data_type: 'integer'
-  is_foreign_key: 1
-  is_nullable: 0
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 100
+
+=head2 email
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 100
 
 =cut
 
 __PACKAGE__->add_columns(
   "id",
   { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
-  "name",
+  "fname",
   { data_type => "varchar", is_nullable => 1, size => 100 },
-  "user_id",
-  { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
+  "lname",
+  { data_type => "varchar", is_nullable => 1, size => 100 },
+  "email",
+  { data_type => "varchar", is_nullable => 1, size => 100 },
 );
 
 =head1 PRIMARY KEY
@@ -76,20 +84,6 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key("id");
 
-=head1 UNIQUE CONSTRAINTS
-
-=head2 C<user_id>
-
-=over 4
-
-=item * L</user_id>
-
-=back
-
-=cut
-
-__PACKAGE__->add_unique_constraint("user_id", ["user_id"]);
-
 =head1 RELATIONS
 
 =head2 critiques
@@ -103,7 +97,7 @@ Related object: L<Schema::Result::Critique>
 __PACKAGE__->has_many(
   "critiques",
   "Schema::Result::Critique",
-  { "foreign.student_id" => "self.id" },
+  { "foreign.grader_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -137,21 +131,6 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
-=head2 user
-
-Type: belongs_to
-
-Related object: L<Schema::Result::User>
-
-=cut
-
-__PACKAGE__->belongs_to(
-  "user",
-  "Schema::Result::User",
-  { id => "user_id" },
-  { is_deferrable => 1, on_delete => "RESTRICT", on_update => "RESTRICT" },
-);
-
 =head2 classes
 
 Type: many_to_many
@@ -163,8 +142,8 @@ Composing rels: L</student_classes> -> class
 __PACKAGE__->many_to_many("classes", "student_classes", "class");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-07-16 17:07:48
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:VIx0db6NIrLK8KYDnDlK2g
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-10-13 20:00:40
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:vhiFMBJnVvCSh3WHwofpdg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

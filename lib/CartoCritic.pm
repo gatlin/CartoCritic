@@ -98,8 +98,9 @@ sub startup {
     my $auth = $r->bridge('/app')->to('user#check');
     $auth->get('/')->to('page#main');
     $auth->get('/logout')->to('user#logout_user');
+    $auth->get('/userinfo')->to('user#userinfo');
+    $auth->put('/account')->to('user#update');
 
-=cut
     my $api  = $r->bridge('/api/v1')->to('user#check');
     ###
     # Class
@@ -109,15 +110,23 @@ sub startup {
     $api->put('/classes/:id')->to('class#update');
     $api->delete('/classes/:id')->to('class#remove');
 
-    $api->get('/classes/:id/assignments')->to('assignments#for_class');
+    $api->get('/classes/:id/assignments')->to('assignment#for_class');
+    $api->get('/classes/:id/students')->to('student#for_class');
 
     ###
     # Students
-    $api->get('/students')->to('student#list');
     $api->get('/students/:id')->to('student#retrieve');
     $api->post('/students')->to('student#create');
-    $api->put('/students/:id')->to('student#update');
     $api->delete('/students/:id')->to('student#remove');
+    $api->get('/assignments/:id/students')->to('student#for_assignment');
+
+    ###
+    # Assignments
+    $api->get('/assignments/:id')->to('assignment#retrieve');
+    $api->post('/assignments')->to('assignment#create');
+    $api->delete('/assignments/:id')->to('assignment#remove');
+=cut
+    $api->put('/students/:id')->to('student#update');
 
     $api->get('/students/:id/critiques')->to('student#critiques');
 
@@ -131,13 +140,7 @@ sub startup {
 
     $api->post('/maps/:id/grade')->to('map#grade');
 
-    ###
-    # Assignments
-    $api->get('/assignments')->to('assignment#list');
-    $api->get('/assignments/:id')->to('assignment#retrieve');
-    $api->post('/assignments')->to('assignment#create');
     $api->put('/assignments/:id')->to('assignment#update');
-    $api->delete('/assignments/:id')->to('assignment#remove');
 =cut
 }
 

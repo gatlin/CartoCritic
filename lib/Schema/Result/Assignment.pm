@@ -53,6 +53,12 @@ __PACKAGE__->table("assignments");
   is_foreign_key: 1
   is_nullable: 0
 
+=head2 name
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 100
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -66,6 +72,8 @@ __PACKAGE__->add_columns(
   },
   "class_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
+  "name",
+  { data_type => "varchar", is_nullable => 1, size => 100 },
 );
 
 =head1 PRIMARY KEY
@@ -113,8 +121,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-07-16 11:55:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:m+u2+7xMhRubTOYRhPWHAQ
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-10-13 23:24:10
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:HELyUtoZxOs0l/eVWZXI5w
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

@@ -41,7 +41,7 @@ __PACKAGE__->table("teachers");
   is_auto_increment: 1
   is_nullable: 0
 
-=head2 name
+=head2 fname
 
   data_type: 'varchar'
   is_nullable: 1
@@ -59,12 +59,18 @@ __PACKAGE__->table("teachers");
   is_foreign_key: 1
   is_nullable: 0
 
+=head2 lname
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 100
+
 =cut
 
 __PACKAGE__->add_columns(
   "id",
   { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
-  "name",
+  "fname",
   { data_type => "varchar", is_nullable => 1, size => 100 },
   "created",
   {
@@ -74,6 +80,8 @@ __PACKAGE__->add_columns(
   },
   "user_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
+  "lname",
+  { data_type => "varchar", is_nullable => 1, size => 100 },
 );
 
 =head1 PRIMARY KEY
@@ -135,8 +143,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-07-16 17:07:48
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:vp9TuF4H76nblnm0AtD1Tw
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-10-13 21:16:24
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:OetOYVoHsGc1B4t3eYNUpg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
