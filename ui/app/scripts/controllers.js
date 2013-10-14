@@ -1,6 +1,6 @@
 'use strict';
 
-var appCtrl = angular.module('appCtrl',[]);
+var appCtrl = angular.module('appCtrl',['angularFileUpload']);
 
 appCtrl.controller('MainCtrl',['$scope','$http',
     function ($scope,$http) {
@@ -245,14 +245,31 @@ appCtrl.controller('AssignmentCtrl',['$scope','$http','$routeParams',
         console.log("AssignmentCtrl");
         $scope.assignment = {};
         var id = $routeParams.id;
-        $http.get('/api/v1/assignments/'+id).
-            success(function(data,success) {
-                $scope.assignment = data;
-                $http.get('/api/v1/assignments/'+$scope.assignment.id+'/students').
-                    success(function(data,success) {
-                        $scope.roster = data;
-                    });
-            });
+
+        $scope.getRoster = function() {
+            $http.get('/api/v1/assignments/'+$scope.assignment.id+'/students').
+                success(function(data,success) {
+                    $scope.roster = data;
+                });
+        };
+
+        $scope.getAssignment = function() {
+            $http.get('/api/v1/assignments/'+id).
+                success(function(data,success) {
+                    $scope.assignment = data;
+                    $scope.getRoster();
+                });
+        };
+
+        $scope.getAssignment();
+
+        $scope.assign = function() {
+            var id = $routeParams.id;
+            $http.post('/api/v1/assignments/'+id+'/assign').
+                success(function(data,success) {
+                    $scope.getAssignment();
+                });
+        };
     }
 ]);
 
@@ -293,5 +310,86 @@ appCtrl.controller('AccountCtrl', ['$scope','$http',
                     $scope.account = data;
                 });
         };
+    }
+]);
+
+appCtrl.controller('MapCtrl', ['$scope','$http','$routeParams',
+    function($scope,$http,$routeParams) {
+        console.log("MapCtrl");
+        $scope.map = {};
+        $scope.class_ = {};
+
+        $scope.graders = [];
+        $scope.peers = [];
+
+        $scope.getAssignment = function(id) {
+            $http.get('/api/v1/assignments/'+id).
+                success(function(data,success) {
+                    $scope.assignment = data;
+                });
+        };
+
+        $scope.getMap = function() {
+            var id = $routeParams.id;
+            $http.get('/maps/'+id).
+                success(function(data,success) {
+                    $scope.map = data;
+                    $scope.getAssignment(data.assignment);
+                });
+        };
+
+        $scope.getPeers = function() {
+            var id = $routeParams.id;
+            $http.get('/maps/'+id+'/peers').
+                success(function(data,success) {
+                    $scope.graders = data.graders;
+                    $scope.peers = data.peers;
+                    console.log($scope.graders);
+                });
+        };
+
+        $scope.onFileSelect = function($files) {
+            var $file = $files[0];
+            $http.uploadFile({
+                url: '/maps/'+$scope.map.guid+'/submit',
+                data: {},
+                file: $file
+            }).then(function(data, status, headers, config) {
+                console.log(data);
+                $scope.getMap();
+            });
+        };
+
+        $scope.getMap();
+        $scope.getPeers();
+
+    }
+]);
+
+appCtrl.controller('CritiqueCtrl', ['$scope', '$http', '$routeParams',
+    function($scope,$http,$routeParams) {
+        console.log('CritiqueCtrl');
+        $scope.map = {assignment: { class: {} }};
+
+        $scope.getMap = function() {
+            var id = $routeParams.id;
+            $http.get('/critiques/'+id).
+                success(function(data,success) {
+                    $scope.map = data;
+                });
+        };
+
+        $scope.saveCritique = function() {
+            var id = $routeParams.id;
+            $http.post('/critiques/'+id,{
+                analysis: $scope.map.analysis,
+                score: $scope.map.score,
+            }).
+                success(function(data,success) {
+                    $scope.getMap();
+                });
+        };
+
+        $scope.getMap();
     }
 ]);

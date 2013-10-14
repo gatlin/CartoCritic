@@ -71,6 +71,18 @@ __PACKAGE__->table("maps");
   is_nullable: 1
   size: 100
 
+=head2 submitted
+
+  data_type: 'integer'
+  default_value: 0
+  is_nullable: 1
+
+=head2 name
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 100
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -93,6 +105,10 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
   },
   "guid",
+  { data_type => "varchar", is_nullable => 1, size => 100 },
+  "submitted",
+  { data_type => "integer", default_value => 0, is_nullable => 1 },
+  "name",
   { data_type => "varchar", is_nullable => 1, size => 100 },
 );
 
@@ -156,8 +172,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-10-13 20:00:40
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:aYUu9RuOaNS9eKYaRqaafQ
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-10-14 18:59:26
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ykhVh6Nutghz/AU0oCApOw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
