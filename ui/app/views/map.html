@@ -17,25 +17,33 @@
 
 <div class="row">
     <div class="col-md-8 col-lg-8 col-sm-12">
-        <div ng-hide="map.submitted">
-            <form role="form" enctype='multipart/form-data'>
-                <div class="form-group">
-                    <label for="submission">Map submission</label>
-                    <input type="file"
-                           ng-file-select="onFileSelect($files)"
-                           name='submission'
-                           id="submission">
-                    <p class="help-block">Choose your map!</p>
+        <div class="panel panel-default">
+            <div class="panel-heading">Map</div>
+            <div class="panel-body">
+                <div ng-show="map.submitted">
+                    <img ng-src="/uploads/{{map.name}}">
                 </div>
-            </form>
-        </div>
-        <div ng-show="map.submitted">
-            <img ng-src="/uploads/{{map.name}}">
+            </div>
         </div>
     </div>
     <div class="col-md-4 col-lg-4 col-sm-12">
         <div class="row">
             <div class="col-md-12 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Map upload</div>
+                    <div class="panel-body">
+                        <form role="form" enctype='multipart/form-data'>
+                            <div class="form-group">
+                                <label for="submission">Map submission</label>
+                                <input type="file"
+                                       ng-file-select="onFileSelect($files)"
+                                       name='submission'
+                                       id="submission">
+                                <p class="help-block">Choose your map!</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Grades for your map
@@ -44,12 +52,18 @@
                     <div class="panel-body" ng-hide="graders.length">
                         <p>Nobody has graded your map yet.</p>
                     </div>
-                    <ul class="list-group" ng-show="graders.length">
-                        <li class="list-group-item"
-                            ng-repeat="g in graders"
-                            >{{g.score}} &mdash; {{g.analysis |
-                            limitTo:30}}</li>
-                    </ul>
+                    <div class="list-group" ng-show="graders.length">
+                        <a class="list-group-item"
+                        href='/uploads/{{g.filename}}'
+                        ng-repeat="g in graders">
+                            <h4 class='list-group-item-heading'>
+                            Score: {{g.score}}
+                            </h4>
+                            <blockquote class='list-group-item-text'>
+                            {{g.analysis | limitTo:30}} ...
+                            </blockquote>
+                        </a>
+                    </div>
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">

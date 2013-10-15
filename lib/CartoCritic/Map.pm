@@ -43,6 +43,7 @@ sub peers {
             analysis => $_->analysis,
             graded => $_->graded,
             score => $_->score,
+            filename => $_->name,
         }
     } $map->critiques;
     @graders = grep { $_->{graded} } @graders;
