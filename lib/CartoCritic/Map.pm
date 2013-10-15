@@ -36,6 +36,7 @@ sub peers {
 
     my $obj = Mojo::JSON->new->decode($self->req->body);
     my $map = $self->db->resultset('Map')->find({ guid => $id });
+    my $a   = $map->assignment;
     my @graders = map {
         {
             guid => $_->guid,
@@ -55,10 +56,15 @@ sub peers {
             analysis => $_->analysis,
             graded => $_->graded,
             score => $_->score,
+            a_id => $_->map->assignment->id,
         }
     } $self->db->resultset('Critique')->search({
         grader_id => $student->id,
     })->all;
+
+    @peers = grep {
+        $_ if $_->{a_id} eq $a->id
+    } @peers;
 
     $self->render(json => {
         peers => \@peers,
