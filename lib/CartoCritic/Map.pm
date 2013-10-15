@@ -45,6 +45,7 @@ sub peers {
             score => $_->score,
         }
     } $map->critiques;
+    @graders = grep { $_->{graded} } @graders;
     my $student = $map->student;
     my @peers = map {
         {

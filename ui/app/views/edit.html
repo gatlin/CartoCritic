@@ -1,0 +1,34 @@
+<style type='text/css'>
+
+      .container {
+          margin: 0;
+          padding: 0;
+      }
+
+      .fs-container {
+        top: -20px;
+        width: 100%;
+        height: 100%;
+        position: absolute;;
+      }
+
+      .literally {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* let's make things a bit bigger */
+
+      .literally input[type=range] {
+        width: 200px;
+      }
+
+</style>
+<div class='fs-container'>
+    <div class='literally'
+        ui-jq='literallycanvas'>
+        <canvas id='canvas'></canvas>
+    </div>
+</div>

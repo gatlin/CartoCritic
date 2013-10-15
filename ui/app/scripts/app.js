@@ -58,6 +58,10 @@ config(['$routeProvider',
             templateUrl: 'views/critique.html',
             controller: 'CritiqueCtrl'
         }).
+        when('/edit/:id', {
+            templateUrl: 'views/edit.html',
+            controller: 'EditCtrl'
+        }).
         /*
         when('/student-assignment/:id',{
             templateUrl: 'views/student-assignment.html',
@@ -67,3 +71,4 @@ config(['$routeProvider',
             redirectTo: '/classes'
         });
 }]);
+

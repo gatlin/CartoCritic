@@ -44,11 +44,12 @@
                     <div class="panel-body" ng-hide="graders.length">
                         <p>Nobody has graded your map yet.</p>
                     </div>
-                    <div class="list-group" ng-show="graders.length">
-                        <a href="#" class="list-group-item"
+                    <ul class="list-group" ng-show="graders.length">
+                        <li class="list-group-item"
                             ng-repeat="g in graders"
-                            >{{g.score}} &mdash; {{g.analysis | limitTo:30}}</a>
-                    </div>
+                            >{{g.score}} &mdash; {{g.analysis |
+                            limitTo:30}}</li>
+                    </ul>
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">

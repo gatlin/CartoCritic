@@ -15,12 +15,13 @@
     </div>
 </div>
 
+
 <div class="row">
     <div class="col-md-8 col-sm-12 col-lg-8">
         <div class="panel panel-default">
             <div class="panel-heading">Map</div>
-            <div class="panel-body">
-                <img ng-show="map.filename" ng-src="uploads/{{map.filename}}">
+            <div class="panel-body" >
+                <img ng-show="map.filename" ng-src="/uploads/{{map.filename}}">
                 <div ng-hide="map.filename" class="alert alert-info">
                     This person hasn't uploaded a map yet. Patience!
                 </div>
@@ -44,6 +45,10 @@
                     <div class="form-group">
                         <button type='submit' class='btn btn-success'>
                             Save critique
+                        </button>
+                        <button type='button' ng-click='edit()'
+                            class='btn btn-info'>
+                            Edit
                         </button>
                     </div>
                 </form>

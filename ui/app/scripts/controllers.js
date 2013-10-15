@@ -366,10 +366,12 @@ appCtrl.controller('MapCtrl', ['$scope','$http','$routeParams',
     }
 ]);
 
-appCtrl.controller('CritiqueCtrl', ['$scope', '$http', '$routeParams',
-    function($scope,$http,$routeParams) {
+appCtrl.controller('CritiqueCtrl', ['$scope', '$http', '$routeParams','$location',
+    function($scope,$http,$routeParams,$location) {
         console.log('CritiqueCtrl');
         $scope.map = {assignment: { class: {} }};
+
+        var container = document.getElementById('canvas_wrapper');
 
         $scope.getMap = function() {
             var id = $routeParams.id;
@@ -387,6 +389,34 @@ appCtrl.controller('CritiqueCtrl', ['$scope', '$http', '$routeParams',
             }).
                 success(function(data,success) {
                     $scope.getMap();
+                });
+        };
+
+        $scope.edit = function() {
+            $location.path('/edit/'+$routeParams.id);
+        };
+
+        $scope.getMap();
+    }
+]);
+
+appCtrl.controller('EditCtrl', ['$scope','$http','$routeParams',
+    function($scope,$http,$routeParams) {
+        console.log('EditCtrl');
+
+        $scope.map = {assignment: { class: {} }};
+        $scope.getMap = function() {
+            var id = $routeParams.id;
+            $http.get('/critiques/'+id).
+                success(function(data,success) {
+                    $scope.map = data;
+                    $scope.canvas = document.getElementById('canvas');
+                    $scope.ctx = $scope.canvas.getContext('2d');
+                    var img = new Image();
+                    img.src = '/uploads/'+data.filename;
+                    img.onload = function () {
+                        $scope.canvas.style='background: url(/uploads/'+data.filename+') no-repeat;';
+                    };
                 });
         };
 
