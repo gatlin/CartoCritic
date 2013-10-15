@@ -20,8 +20,11 @@
     <div class="col-md-8 col-sm-12 col-lg-8">
         <div class="panel panel-default">
             <div class="panel-heading">Map</div>
-            <div class="panel-body" >
-                <img ng-show="map.filename" ng-src="/uploads/{{map.filename}}">
+            <div class="panel-body"
+                style='background: url(/uploads/'+{{map.filename}}+')
+                no-repeat;'
+                >
+                <img ng-show="map.filename" ng-src="/uploads/{{map.critname || map.filename}}">
                 <div ng-hide="map.filename" class="alert alert-info">
                     This person hasn't uploaded a map yet. Patience!
                 </div>
@@ -46,10 +49,18 @@
                         <button type='submit' class='btn btn-success'>
                             Save critique
                         </button>
-                        <button type='button' ng-click='edit()'
-                            class='btn btn-info'>
+                        <a  class='btn btn-primary'
+                            targe="_blank"
+                            href='/edit?bkgd_url=/uploads/{{map.filename}}&critique={{map.guid}}&initFill=0'>
                             Edit
-                        </button>
+                        </a>
+                    </div>
+                    <div class="form-group">
+                        <label for="submission">Critique submission</label>
+                        <input type="file"
+                               ng-file-select="onFileSelect($files)"
+                               name='submission'
+                               id="submission">
                     </div>
                 </form>
             </div>

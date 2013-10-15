@@ -369,7 +369,7 @@ appCtrl.controller('MapCtrl', ['$scope','$http','$routeParams',
 appCtrl.controller('CritiqueCtrl', ['$scope', '$http', '$routeParams','$location',
     function($scope,$http,$routeParams,$location) {
         console.log('CritiqueCtrl');
-        $scope.map = {assignment: { class: {} }};
+        $scope.map = {assignment: { class: {} },filename: ''};
 
         var container = document.getElementById('canvas_wrapper');
 
@@ -392,32 +392,16 @@ appCtrl.controller('CritiqueCtrl', ['$scope', '$http', '$routeParams','$location
                 });
         };
 
-        $scope.edit = function() {
-            $location.path('/edit/'+$routeParams.id);
-        };
-
-        $scope.getMap();
-    }
-]);
-
-appCtrl.controller('EditCtrl', ['$scope','$http','$routeParams',
-    function($scope,$http,$routeParams) {
-        console.log('EditCtrl');
-
-        $scope.map = {assignment: { class: {} }};
-        $scope.getMap = function() {
-            var id = $routeParams.id;
-            $http.get('/critiques/'+id).
-                success(function(data,success) {
-                    $scope.map = data;
-                    $scope.canvas = document.getElementById('canvas');
-                    $scope.ctx = $scope.canvas.getContext('2d');
-                    var img = new Image();
-                    img.src = '/uploads/'+data.filename;
-                    img.onload = function () {
-                        $scope.canvas.style='background: url(/uploads/'+data.filename+') no-repeat;';
-                    };
-                });
+        $scope.onFileSelect = function($files) {
+            var $file = $files[0];
+            $http.uploadFile({
+                url: '/critiques/'+$scope.map.guid+'/upload',
+                data: {},
+                file: $file
+            }).then(function(data, status, headers, config) {
+                console.log(data);
+                $scope.getMap();
+            });
         };
 
         $scope.getMap();

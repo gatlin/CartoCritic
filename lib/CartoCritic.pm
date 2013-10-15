@@ -78,6 +78,8 @@ sub startup {
         },
     });
 
+    push @{$self->app->static->paths}, 'public/editor';
+
     # Router
     my $r = $self->routes;
 
@@ -94,6 +96,7 @@ sub startup {
     });
     $r->post('/login')->to('user#login');
     $r->post('/register')->to('user#register');
+    $r->get('/edit')->to('page#edit');
 
     ###
     # Maps
@@ -106,6 +109,7 @@ sub startup {
     # Critiques
     $r->get('/critiques/:id')->to('critique#retrieve');
     $r->post('/critiques/:id')->to('critique#update');
+    $r->post('/critiques/:id/upload')->to('critique#upload');
 
     my $auth = $r->bridge('/app')->to('user#check');
     $auth->get('/')->to('page#main');

@@ -82,6 +82,12 @@ __PACKAGE__->table("critiques");
   default_value: 0
   is_nullable: 1
 
+=head2 name
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 100
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -105,6 +111,8 @@ __PACKAGE__->add_columns(
   { data_type => "integer", default_value => 0, is_nullable => 1 },
   "score",
   { data_type => "integer", default_value => 0, is_nullable => 1 },
+  "name",
+  { data_type => "varchar", is_nullable => 1, size => 100 },
 );
 
 =head1 PRIMARY KEY
@@ -152,8 +160,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-10-14 17:57:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:kr9O6DT5f30DyS2Mh1PQbw
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-10-15 00:08:33
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:eJ3waLY8yb3frKktSJQp3w
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

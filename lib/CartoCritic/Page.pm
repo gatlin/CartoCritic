@@ -23,4 +23,9 @@ sub main {
     $self->render_static('app.html');
 }
 
+sub edit {
+    my $self = shift;
+    $self->render_static('editor/svg-editor.html');
+}
+
 1;
