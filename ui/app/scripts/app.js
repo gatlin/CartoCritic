@@ -4,6 +4,7 @@
 var app = angular.module('myApp',[
     'ngRoute',
     'ui.jq',
+    'angularFileUpload',
     'appCtrl'
 ]).
 
@@ -48,7 +49,16 @@ config(['$routeProvider',
         when('/assignments/:id',{
             templateUrl: 'views/assignment.html',
             controller: 'AssignmentCtrl'
-        })./*
+        }).
+        when('/map/:id', {
+            templateUrl: 'views/map.html',
+            controller: 'MapCtrl'
+        }).
+        when('/critique/:id', {
+            templateUrl: 'views/critique.html',
+            controller: 'CritiqueCtrl'
+        }).
+        /*
         when('/student-assignment/:id',{
             templateUrl: 'views/student-assignment.html',
             controller: 'StudentAssignmentCtrl'

@@ -95,6 +95,18 @@ sub startup {
     $r->post('/login')->to('user#login');
     $r->post('/register')->to('user#register');
 
+    ###
+    # Maps
+    $r->get('/maps/:id')->to('map#retrieve');
+    $r->put('/maps/:id')->to('map#update');
+    $r->get('/maps/:id/peers')->to('map#peers');
+    $r->post('/maps/:id/submit')->to('map#submit');
+
+    ###
+    # Critiques
+    $r->get('/critiques/:id')->to('critique#retrieve');
+    $r->post('/critiques/:id')->to('critique#update');
+
     my $auth = $r->bridge('/app')->to('user#check');
     $auth->get('/')->to('page#main');
     $auth->get('/logout')->to('user#logout_user');
@@ -126,6 +138,7 @@ sub startup {
     $api->post('/assignments')->to('assignment#create');
     $api->delete('/assignments/:id')->to('assignment#remove');
     $api->post('/assignments/:id/assign')->to('assignment#assign');
+
 =cut
     $api->put('/students/:id')->to('student#update');
 

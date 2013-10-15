@@ -67,6 +67,14 @@ sub remove {
 
     my $id   = $self->param('id');
     my $assignment = $self->db->resultset('Assignment')->find($id);
+    my @maps = $assignment->maps;
+    foreach my $map (@maps) {
+        my @critiques = $map->critiques;
+        foreach my $c (@critiques) {
+            $c->delete if $c;
+        }
+        $map->delete if $map;
+    }
     $assignment->delete if $assignment;
 
     $self->render(json => {});
@@ -85,6 +93,8 @@ sub assign {
     use Data::Dump qw(pp);
     my @students = shuffle(map { $_->student }
         $class->student_classes->all);
+
+    $self->render(json => {}) and return unless scalar(@students) > 2;
 
     my %maps = (); my %peers = ();
     my $i = 0; my $k = scalar(@students);
