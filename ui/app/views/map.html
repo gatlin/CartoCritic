@@ -1,0 +1,75 @@
+<ol class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#/classes">Classes</a></li>
+    <li><a href="#/classes/{{assignment.class.id}}">{{assignment.class.title}}</a></li>
+    <li><a href="#/classes/{{assignment.class.id}}/assignments">Assignments</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="page-header">
+            <h1>Map for {{assignment.name}}
+                <small>{{assignment.class.title}}</small>
+            </h1>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 col-lg-8 col-sm-12">
+        <div ng-hide="map.submitted">
+            <form role="form" enctype='multipart/form-data'>
+                <div class="form-group">
+                    <label for="submission">Map submission</label>
+                    <input type="file"
+                           ng-file-select="onFileSelect($files)"
+                           name='submission'
+                           id="submission">
+                    <p class="help-block">Choose your map!</p>
+                </div>
+            </form>
+        </div>
+        <div ng-show="map.submitted">
+            <img ng-src="/uploads/{{map.name}}">
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-12">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Grades for your map
+                        <span class="badge">{{graders.length}}</span>
+                    </div>
+                    <div class="panel-body" ng-hide="graders.length">
+                        <p>Nobody has graded your map yet.</p>
+                    </div>
+                    <div class="list-group" ng-show="graders.length">
+                        <a href="#" class="list-group-item"
+                            ng-repeat="g in graders"
+                            >{{g.score}} &mdash; {{g.analysis | limitTo:30}}</a>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-tasks"></span>
+                        Peer maps to grade
+                    </div>
+                    <div class="list-group">
+                        <a href="#/critique/{{p.guid}}" class="list-group-item"
+                            ng-repeat="p in peers"
+                            >
+                            <span ng-show="p.graded">
+                                <span class="glyphicon glyphicon-ok"></span>
+                                Graded!
+                            </span>
+                            <span ng-hide="p.graded">
+                                Not graded
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

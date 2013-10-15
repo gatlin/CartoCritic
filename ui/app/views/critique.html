@@ -1,0 +1,53 @@
+<ol class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#/classes">Classes</a></li>
+    <li><a href="#/classes/{{map.assignment.class.id}}">{{map.assignment.class.title}}</a></li>
+    <li><a href="#/classes/{{map.assignment.class.id}}/assignments">Assignments</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="page-header">
+            <h1>Map for {{map.assignment.name}}
+                <small>{{map.assignment.class.title}}</small>
+            </h1>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 col-sm-12 col-lg-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">Map</div>
+            <div class="panel-body">
+                <img ng-show="map.filename" ng-src="uploads/{{map.filename}}">
+                <div ng-hide="map.filename" class="alert alert-info">
+                    This person hasn't uploaded a map yet. Patience!
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Score &amp; Analysis</div>
+            <div class="panel-body">
+                <form role="form" ng-submit="saveCritique()">
+                    <div class="form-group">
+                        <input type="text" class="form-control"
+                        ng-model="map.score">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control"
+                            ng-model="map.analysis"
+                            rows="10">{{map.analysis}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type='submit' class='btn btn-success'>
+                            Save critique
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
