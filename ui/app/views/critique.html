@@ -55,12 +55,19 @@
                             Edit
                         </a>
                     </div>
+                </form>
+                <form action="/critiques/{{map.guid}}/upload"
+                    method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="submission">Critique submission</label>
                         <input type="file"
-                               ng-file-select="onFileSelect($files)"
-                               name='submission'
+                               name='file'
                                id="submission">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit"
+                            class="form-control"
+                            value="Submit">Upload</button>
                     </div>
                 </form>
             </div>

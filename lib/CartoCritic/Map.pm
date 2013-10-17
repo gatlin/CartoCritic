@@ -79,6 +79,10 @@ sub submit{
     my $map = $self->db->resultset('Map')->find({ guid => $id });
     return $self->render(json => {}) unless $map;
 
+    use Data::Dump qw(pp);
+    say pp $self->req->content;
+    say pp $self->req->headers;
+
     my $fu = $self->req->upload('file');
     my $fn = $fu->filename;
     my ($first,$ext) = split /\./, $fn;
@@ -91,7 +95,8 @@ sub submit{
         submitted => 1,
     });
 
-    $self->render(json => {url => "uploads/$n.$ext"});
+    $self->redirect_to("/app#/map/".$map->guid);
+#    $self->render(json => {url => "uploads/$n.$ext"});
 }
 
 1;

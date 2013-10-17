@@ -59,9 +59,11 @@ sub upload {
         graded => 1,
     });
 
-    $self->render(json => {
-        success => 1
-    });
+    $self->redirect_to("/app#/critique/".$critique->guid);
+
+#    $self->render(json => {
+#        success => 1
+#    });
 }
 
 

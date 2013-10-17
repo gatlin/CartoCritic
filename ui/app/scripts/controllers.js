@@ -352,7 +352,7 @@ appCtrl.controller('MapCtrl', ['$scope','$http','$routeParams',
             var $file = $files[0];
             $http.uploadFile({
                 url: '/maps/'+$scope.map.guid+'/submit',
-                data: {},
+                data: { key: 'val'},
                 file: $file
             }).then(function(data, status, headers, config) {
                 console.log(data);
@@ -390,18 +390,6 @@ appCtrl.controller('CritiqueCtrl', ['$scope', '$http', '$routeParams','$location
                 success(function(data,success) {
                     $scope.getMap();
                 });
-        };
-
-        $scope.onFileSelect = function($files) {
-            var $file = $files[0];
-            $http.uploadFile({
-                url: '/critiques/'+$scope.map.guid+'/upload',
-                data: {},
-                file: $file
-            }).then(function(data, status, headers, config) {
-                console.log(data);
-                $scope.getMap();
-            });
         };
 
         $scope.getMap();
